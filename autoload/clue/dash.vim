@@ -41,8 +41,7 @@ func clue#dash#html_absolute_path(doc, path)
 endfunc
 
 func clue#dash#query_external(s)
-	" TODO: URI encode s
-	call system(printf("xdg-open 'dash-plugin:query=%s'", a:s))
+	call system(printf("xdg-open 'dash-plugin:query=%s'", clue#util#uri_encode(a:s)))
 endfunc
 
 func clue#dash#open_external(doc, query)
