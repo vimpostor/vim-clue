@@ -25,6 +25,10 @@ The following keys are available:
 	"browser"					*clue_options_browser*
 		The browser to use for rendering HTML in the terminal.
 
+	"default_mappings"				*clue_options_default_mappings*
+		If truthy, use the default keybindings. When you disable this,
+		refer to |clue-api| for how to setup your own keybindings.
+
 ------------------------------------------------------------------------------
 API							*clue-api*
 
