@@ -44,13 +44,26 @@ func clue#dash#query_external(s)
 	call system(printf("xdg-open 'dash-plugin:query=%s'", clue#util#uri_encode(a:s)))
 endfunc
 
-func clue#dash#open_external(doc, query)
+func clue#dash#open(doc, query, internal)
 	let res = clue#dash#query(a:doc, a:query)
 	if empty(res)
 		echoe "No results"
 		return
 	endif
-	call system("xdg-open " . clue#dash#html_absolute_path(a:doc, res[0]))
+	let path = clue#dash#html_absolute_path(a:doc, res[0])
+	if a:internal
+		call clue#dash#open_internal(path)
+	else
+		call clue#dash#open_external(path)
+	end
+endfunc
+
+func clue#dash#open_internal(path)
+	exec printf("term %s %s", g:clue_options.browser, a:path)
+endfunc
+
+func clue#dash#open_external(path)
+	call system("xdg-open " . a:path)
 endfunc
 
 func clue#dash#lookup(query)
