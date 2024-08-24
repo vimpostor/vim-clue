@@ -1,0 +1,35 @@
+*clue.txt*	Documentation directly at your fingertips.
+*clue*
+
+CONTENTS						*clue-contents*
+
+Introduction					|clue-introduction|
+Configuration					|clue-configure|
+Api						|clue-api|
+Colors						|clue-colors|
+
+==============================================================================
+INTRODUCTION						*clue-introduction*
+
+Documentation directly at your fingertips.
+
+------------------------------------------------------------------------------
+CONFIGURATION						*clue-configure*
+
+	g:clue_options					*g:clue_options*
+All user-facing options are configured with the |g:clue_options| variable,
+which is a |Dictionary| containing all options as key-value pairs.
+The default options can be retrieved with |clue#default_options()|.
+The following keys are available:
+
+	"browser"					*clue_options_browser*
+		The browser to use for rendering HTML in the terminal.
+
+------------------------------------------------------------------------------
+API							*clue-api*
+
+	clue#default_options()				*clue#default_options()*
+		Returns the default values for |g:clue_options|.
+
+==============================================================================
+	vim:tw=78:sw=4:ts=8:ft=help:norl:noet:
