@@ -1,5 +1,5 @@
 func clue#util#uri_encode(s)
-	return a:s->map({_, v -> 1 + match(v, '[-_.~a-zA-Z0-9]') ? v : printf("%%%02x", char2nr(v))})
+	return a:s->map({_, v -> match(v, '[-_.~a-zA-Z0-9]') ? printf("%%%02X", char2nr(v)) : v})
 endfunc
 
 func clue#util#current_symbol()
