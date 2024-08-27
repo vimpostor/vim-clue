@@ -59,8 +59,7 @@ func clue#dash#open(query, mode)
 		endif
 	endfor
 	if empty(res)
-		echoe "No results"
-		return
+		return 0
 	endif
 
 	let path = clue#dash#html_absolute_path(doc, res[0])
@@ -71,6 +70,7 @@ func clue#dash#open(query, mode)
 	else
 		call clue#dash#open_external(path)
 	end
+	return 1
 endfunc
 
 func clue#dash#open_internal(path)
@@ -82,7 +82,9 @@ func clue#dash#open_external(path)
 endfunc
 
 func clue#dash#lookup(query)
-	call clue#dash#query_external(a:query)
+	if !clue#dash#open(a:query, 'popup')
+		call clue#dash#query_external(a:query)
+	endif
 endfunc
 
 func clue#dash#lookup_current()
