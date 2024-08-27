@@ -64,7 +64,7 @@ func clue#dash#open(query, mode)
 	if a:mode == 'term'
 		call clue#dash#open_internal(path)
 	elseif a:mode == 'popup'
-		call clue#dash#show_w3m(path)
+		call clue#dash#show_pandoc(path)
 	else
 		call clue#dash#open_external(path)
 	end
@@ -95,6 +95,21 @@ endfunc
 func clue#dash#show_w3m(path)
 	let b = term_start(['w3m', '-o', 'confirm_qq=false', a:path], #{hidden: 1, term_finish: 'close', term_kill: 'term'})
 	call popup_create(b, #{minwidth: 50, minheight: 20})
+endfunc
+
+func clue#dash#show_pandoc(path)
+	" skip to anchor
+	let h = stridx(a:path, '#')
+	let a = strcharpart(a:path, h + 1)
+	let f = h == -1 ? a:path : strcharpart(a:path, 0, h)
+	let html = readfile(f)
+	if h != -1
+		while len(html) && stridx(html[0], a) == -1
+			call remove(html, 0)
+		endwhile
+	endif
+	let txt = systemlist("pandoc -w plain -r html -", html)
+	call popup_atcursor(txt, #{})
 endfunc
 
 call clue#dash#init()
