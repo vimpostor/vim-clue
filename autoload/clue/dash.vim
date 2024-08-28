@@ -30,12 +30,20 @@ func clue#dash#docset_paths()
 	return [$HOME . '/.local/share/Zeal/Zeal/docsets']
 endfunc
 
+func clue#dash#sanitize_sqlite_path(s)
+	let res = a:s
+	while stridx(res, '<dash_entry_') == 0
+		let res = strcharpart(res, stridx(res, '>') + 1)
+	endwhile
+	return res
+endfunc
+
 func clue#dash#query(doc, query)
 	let res = trim(system(printf('sqlite3 -json %s "SELECT path FROM searchIndex WHERE name = %s"', s:docs[a:doc].path . '/docSet.dsidx', printf("'%s'", a:query))))
 	if empty(res)
 		return []
 	endif
-	return map(json_decode(res), {_, v -> v.path})
+	return map(json_decode(res), {_, v -> clue#dash#sanitize_sqlite_path(v.path)})
 endfunc
 
 func clue#dash#get_all(doc)
