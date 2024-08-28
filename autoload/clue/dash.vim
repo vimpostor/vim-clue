@@ -58,9 +58,26 @@ func clue#dash#query_external(s)
 	call system(printf("xdg-open 'dash-plugin:query=%s'", clue#util#uri_encode(a:s)))
 endfunc
 
+func clue#dash#additional_docs()
+	if &filetype == "cpp"
+		return ["C++", "Qt_6"]
+	endif
+	return []
+endfunc
+
+func clue#dash#priority_docs()
+	" most relevant docsets match in an earlier level, and move to the front
+	let levels = [{v -> v ==? &filetype}, {v -> index(clue#dash#additional_docs(), v) + 1}, {v -> 1}]
+	let r = []
+	for L in levels
+		call extend(r, filter(keys(s:docs), {_, v -> index(r, v) < 0 && L(v)}))
+	endfor
+	return r
+endfunc
+
 func clue#dash#open(query, mode)
 	let s:current_query = a:query
-	for doc in keys(s:docs)
+	for doc in clue#dash#priority_docs()
 		let res = clue#dash#query(doc, a:query)
 		if len(res)
 			break
