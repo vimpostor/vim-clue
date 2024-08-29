@@ -4,6 +4,9 @@ let s:current_query = ""
 
 func clue#dash#init()
 	for p in clue#dash#docset_paths()
+		if !isdirectory(p)
+			continue
+		endif
 		for d in readdir(p)
 			let dpath = p . '/' . d
 			let meta = dpath . '/meta.json'
@@ -27,7 +30,7 @@ func clue#dash#init()
 endfunc
 
 func clue#dash#docset_paths()
-	return [$HOME . '/.local/share/Zeal/Zeal/docsets']
+	return [$HOME . '/.local/share/Zeal/Zeal/docsets', $HOME . '/Library/Application Support/Dash/DocSets']
 endfunc
 
 func clue#dash#sanitize_sqlite_path(s)
