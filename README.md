@@ -10,4 +10,7 @@ Using **vim-plug**:
 Plug 'vimpostor/vim-clue'
 ```
 
-Make sure you have [pandoc](https://pandoc.org/), [sqlite](https://www.sqlite.org/) and a [dash](https://www.kapeli.com/dash)-compatible documentation browser such as [zeal](https://zealdocs.org/) installed.
+Additionally the following external software dependencies are required to be installed:
+- [zeal](https://zealdocs.org/)
+- [sqlite](https://www.sqlite.org/)
+- [pandoc](https://pandoc.org/)
