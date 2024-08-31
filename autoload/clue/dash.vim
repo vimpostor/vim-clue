@@ -72,19 +72,23 @@ func clue#dash#additional_docs()
 	return []
 endfunc
 
-func clue#dash#priority_docs()
+func clue#dash#priority_docs(n)
 	" most relevant docsets match in an earlier level, and move to the front
 	let levels = [{v -> v ==? &filetype}, {v -> index(clue#dash#additional_docs(), v) + 1}, {v -> 1}]
 	let r = []
-	for L in levels
-		call extend(r, filter(keys(s:docs), {_, v -> index(r, v) < 0 && L(v)}))
+	for i in range(a:n + !a:n * len(levels))
+		call extend(r, filter(keys(s:docs), {_, v -> index(r, v) < 0 && levels[i](v)}))
 	endfor
 	return r
 endfunc
 
+func clue#dash#sorted_docs()
+	return clue#dash#priority_docs(0)
+endfunc
+
 func clue#dash#open(query, mode)
 	let s:current_query = a:query
-	for doc in clue#dash#priority_docs()
+	for doc in clue#dash#sorted_docs()
 		let res = clue#dash#query(doc, a:query)
 		if len(res)
 			break

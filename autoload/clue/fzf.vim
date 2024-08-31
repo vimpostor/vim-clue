@@ -10,7 +10,11 @@ func clue#fzf#show(docs)
 endfunc
 
 func clue#fzf#all()
-	call clue#fzf#show(clue#dash#priority_docs())
+	call clue#fzf#show(clue#dash#sorted_docs())
+endfunc
+
+func clue#fzf#filetype()
+	call clue#fzf#show(clue#dash#priority_docs(2))
 endfunc
 
 func clue#fzf#sink(l)
