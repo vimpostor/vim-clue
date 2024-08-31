@@ -1,8 +1,11 @@
 let s:actions = ["ctrl-b", "ctrl-d", "ctrl-z"]
 
-func clue#fzf#show(doc)
-	let l = clue#dash#get_all(a:doc)
-	let a = map(l, {_, v -> v.name . "\t" . clue#dash#html_absolute_path(a:doc, clue#dash#sanitize_sqlite_path(v.path))})
+func clue#fzf#show(docs)
+	let a = []
+	for doc in a:docs
+		let l = clue#dash#get_all(doc)
+		let a = a->extend(map(l, {_, v -> v.name . "\t" . clue#dash#html_absolute_path(doc, clue#dash#sanitize_sqlite_path(v.path))}))
+	endfor
 	call fzf#run(fzf#wrap(#{source: a, sinklist: function('clue#fzf#sink'), options: ['--delimiter', "\t", '--with-nth', '1', '--preview', 'pandoc -w plain -r html {2}', '--expect', join(s:actions, ',')]}))
 endfunc
 
