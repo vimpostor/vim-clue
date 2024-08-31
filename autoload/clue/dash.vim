@@ -29,6 +29,10 @@ func clue#dash#init()
 	endfor
 endfunc
 
+func clue#dash#docs()
+	return s:docs
+endfunc
+
 func clue#dash#docset_paths()
 	return [$HOME . '/.local/share/Zeal/Zeal/docsets', $HOME . '/Library/Application Support/Dash/DocSets']
 endfunc
