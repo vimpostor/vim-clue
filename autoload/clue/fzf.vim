@@ -9,6 +9,10 @@ func clue#fzf#show(docs)
 	call fzf#run(fzf#wrap(#{source: a, sinklist: function('clue#fzf#sink'), options: ['--delimiter', "\t", '--with-nth', '1', '--preview', 'pandoc -w plain -r html {2}', '--expect', join(s:actions, ',')]}))
 endfunc
 
+func clue#fzf#all()
+	call clue#fzf#show(clue#dash#priority_docs())
+endfunc
+
 func clue#fzf#sink(l)
 	let k = strcharpart(a:l[0], 5)
 	let t = stridx(a:l[1], "\t")
