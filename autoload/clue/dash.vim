@@ -170,8 +170,7 @@ func clue#dash#show_pandoc(path)
 	endif
 	let txt = systemlist("pandoc -w plain -r html -", html)
 	let s:popup_current_path = a:path
-	let w = popup_atcursor(txt, #{moved: "any", filter: 'clue#dash#popup_filter'})
-	call setbufvar(winbufnr(w), '&filetype', &filetype)
+	call clue#util#popup(txt, 'clue#dash#popup_filter')
 endfunc
 
 call clue#dash#init()

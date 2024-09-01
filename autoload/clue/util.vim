@@ -1,3 +1,5 @@
+let s:last_popup = 0
+
 func clue#util#uri_encode(s)
 	return a:s->map({_, v -> match(v, '[-_.~a-zA-Z0-9]') ? printf("%%%02X", char2nr(v)) : v})
 endfunc
@@ -18,4 +20,16 @@ endfunc
 func clue#util#strip_anchor(u)
 	let a = len(clue#util#get_anchor(a:u))
 	return strcharpart(a:u, 0, len(a:u) - a - !!a)
+endfunc
+
+func clue#util#popup(txt, filter)
+	if has('nvim')
+		let buf = nvim_create_buf(0, 1)
+		call nvim_buf_set_lines(buf, 0, -1, 1, a:txt)
+		let s:last_popup = nvim_open_win(buf, 0, #{relative: 'cursor', bufpos: getpos('.')[1:2], width: 80, height: 50, style: 'minimal'})
+		au CursorMoved * ++once call nvim_win_close(s:last_popup, 1)
+	else
+		let s:last_popup = popup_atcursor(a:txt, #{moved: "any", filter: a:filter})
+	endif
+	call setbufvar(winbufnr(s:last_popup), '&filetype', &filetype)
 endfunc
