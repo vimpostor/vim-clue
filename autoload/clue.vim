@@ -4,7 +4,7 @@ func clue#init()
 	if g:clue_options.default_mappings
 		noremap <silent> <F1> :call clue#dash#lookup_current()<CR>
 		xnoremap <silent> <F1> :call clue#dash#lookup_visual()<CR>
-		noremap <silent> <Leader>d :call clue#fzf#filetype()<CR>
+		noremap <silent> <Leader>d :call clue#fzf#relevant()<CR>
 	endif
 endfunc
 

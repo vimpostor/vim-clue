@@ -17,6 +17,14 @@ func clue#fzf#filetype()
 	call clue#fzf#show(clue#dash#priority_docs(2))
 endfunc
 
+func clue#fzf#relevant()
+	if &filetype
+		call clue#fzf#filetype()
+	else
+		call clue#fzf#all()
+	endif
+endfunc
+
 func clue#fzf#sink(l)
 	let k = strcharpart(a:l[0], 5)
 	let t = stridx(a:l[1], "\t")
