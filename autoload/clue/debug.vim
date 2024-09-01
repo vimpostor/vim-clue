@@ -7,7 +7,7 @@ func clue#debug#redact_home(p)
 endfunc
 
 func clue#debug#redact_docs(d)
-	return map(a:d, {_, v -> extend(v, #{path: clue#debug#redact_home(v.path)})})
+	return mapnew(a:d, {_, v -> extendnew(v, #{path: clue#debug#redact_home(v.path)})})
 endfunc
 
 func clue#debug#info()
