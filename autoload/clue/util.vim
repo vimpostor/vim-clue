@@ -29,7 +29,11 @@ func clue#util#popup(txt, filter)
 		let s:last_popup = nvim_open_win(buf, 0, #{relative: 'cursor', bufpos: getpos('.')[1:2], width: 80, height: 50, style: 'minimal'})
 		au CursorMoved * ++once call nvim_win_close(s:last_popup, 1)
 	else
-		let s:last_popup = popup_atcursor(a:txt, #{moved: "any", filter: a:filter})
+		let o = #{moved: "any"}
+		if len(a:filter)
+			let o.filter = a:filter
+		endif
+		let s:last_popup = popup_atcursor(a:txt, o)
 	endif
 	call setbufvar(winbufnr(s:last_popup), '&filetype', &filetype)
 endfunc

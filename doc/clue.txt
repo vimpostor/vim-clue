@@ -13,6 +13,11 @@ INTRODUCTION						*clue-introduction*
 
 Documentation directly at your fingertips.
 
+The following external dependencies are required to be installed:
+- zeal
+- sqlite
+= pandoc
+
 ------------------------------------------------------------------------------
 CONFIGURATION						*clue-configure*
 
