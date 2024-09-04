@@ -37,8 +37,21 @@ The following keys are available:
 ------------------------------------------------------------------------------
 API							*clue-api*
 
+	clue#dash#lookup(query)				*clue#dash#lookup()*
+		Lookup the passed query using Dash docsets.
+
+	clue#dash#lookup_current()			*clue#dash#lookup_current()*
+		Lookup the symbol under the cursor using Dash docsets.
+
+	clue#dash#lookup_visual()			*clue#dash#lookup_visual()*
+		Lookup the currently selected symbol using Dash docsets.
+
 	clue#default_options()				*clue#default_options()*
 		Returns the default values for |g:clue_options|.
+
+	clue#fzf#relevant()				*clue#fzf#relevant()*
+		Show all documentation relevant to the current |filetype| in a
+		fzf dialog.
 
 ==============================================================================
 	vim:tw=78:sw=4:ts=8:ft=help:norl:noet:
