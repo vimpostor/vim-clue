@@ -36,5 +36,5 @@ func clue#util#popup(txt, filter)
 		endif
 		let s:last_popup = popup_atcursor(a:txt, o)
 	endif
-	call setbufvar(winbufnr(s:last_popup), '&filetype', &filetype)
+	call setbufvar(winbufnr(s:last_popup), '&filetype', len(&filetype) ? &filetype : 'markdown')
 endfunc
