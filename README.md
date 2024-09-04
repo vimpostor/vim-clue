@@ -15,7 +15,7 @@ Additionally the following software dependencies are required to be installed:
 - [sqlite](https://www.sqlite.org/)
 - [pandoc](https://pandoc.org/)
 
-![Screenshot](https://github.com/user-attachments/assets/21310755/364539539-28f03dbc-385d-4c17-a4ef-bb6b79561142.png)
+![Screenshot](https://github.com/user-attachments/assets/28f03dbc-385d-4c17-a4ef-bb6b79561142)
 
 # Usage
 
