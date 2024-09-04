@@ -23,13 +23,14 @@ func clue#util#strip_anchor(u)
 endfunc
 
 func clue#util#popup(txt, filter)
+	let tcols = 80
 	if has('nvim')
 		let buf = nvim_create_buf(0, 1)
 		call nvim_buf_set_lines(buf, 0, -1, 1, a:txt)
-		let s:last_popup = nvim_open_win(buf, 0, #{relative: 'cursor', bufpos: getpos('.')[1:2], width: 80, height: 50, style: 'minimal'})
+		let s:last_popup = nvim_open_win(buf, 0, #{relative: 'cursor', bufpos: getpos('.')[1:2], width: tcols, height: 50, style: 'minimal'})
 		au CursorMoved * ++once call nvim_win_close(s:last_popup, 1)
 	else
-		let o = #{moved: "any"}
+		let o = #{moved: "any", minwidth: tcols}
 		if len(a:filter)
 			let o.filter = a:filter
 		endif
