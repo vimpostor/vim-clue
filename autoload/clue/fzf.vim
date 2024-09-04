@@ -6,7 +6,7 @@ func clue#fzf#show(docs)
 		let l = clue#dash#get_all(doc)
 		let a = a->extend(map(l, {_, v -> v.name . "\t" . clue#dash#html_absolute_path(doc, clue#dash#sanitize_sqlite_path(v.path))}))
 	endfor
-	call fzf#run(fzf#wrap(#{source: a, sinklist: function('clue#fzf#sink'), options: ['--delimiter', "\t", '--with-nth', '1', '--preview', 'pandoc -w plain -r html {2}', '--expect', join(s:actions, ',')]}))
+	call fzf#run(fzf#wrap(#{source: a, sinklist: function('clue#fzf#sink'), options: ['--delimiter', "\t", '--with-nth', '1', '--preview', 'pandoc -w plain -r html $(printf {2} | sed "s/#.*//")', '--expect', join(s:actions, ',')]}))
 endfunc
 
 func clue#fzf#all()
