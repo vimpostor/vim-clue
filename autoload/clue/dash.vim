@@ -154,6 +154,10 @@ func clue#dash#popup_filter(w, k)
 	elseif a:k == 'x'
 		call popup_close(a:w)
 		return 1
+	elseif index(["\<c-d>", "\<c-u>", "\<c-f>", "\<c-b>"], a:k) + 1
+		" delegate scroll to popup
+		call win_execute(a:w, "norm! " . a:k)
+		return 1
 	endif
 	return 0
 endfunc
