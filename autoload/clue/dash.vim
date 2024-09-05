@@ -133,6 +133,11 @@ func clue#dash#lookup_visual()
 	call clue#dash#lookup(join(getregion(getpos('v'), getpos('.'), #{ type: mode() })))
 endfunc
 
+func clue#dash#lookup_opfunc(t)
+	let s = join(getregion(getpos("'["), getpos("']")))
+	call clue#dash#lookup(s)
+endfunc
+
 func clue#dash#show_w3m(path)
 	let b = term_start(['w3m', '-o', 'confirm_qq=false', a:path], #{hidden: 1, term_finish: 'close', term_kill: 'term'})
 	call popup_create(b, #{minwidth: 50, minheight: 20})

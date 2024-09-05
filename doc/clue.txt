@@ -43,6 +43,15 @@ API							*clue-api*
 	clue#dash#lookup_current()			*clue#dash#lookup_current()*
 		Lookup the symbol under the cursor using Dash docsets.
 
+	clue#dash#lookup_opfunc()			*clue#dash#lookup_opfunc()*
+		Lookup the symbol using pending vim motions. This function is
+		compatible as an |operatorfunc| and can be used with |g@| as
+		follows, so that pressing e.g. `<F1>iw` looks up the current
+		word:
+>
+		nnoremap <silent> <F1> :set opfunc=clue#dash#lookup_opfunc<CR>g@
+<
+
 	clue#dash#lookup_visual()			*clue#dash#lookup_visual()*
 		Lookup the currently selected symbol using Dash docsets.
 
