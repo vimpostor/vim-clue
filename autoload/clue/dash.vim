@@ -1,5 +1,7 @@
 let s:docs = {}
 let s:popup_current_path = ""
+let s:selector_current_paths = []
+let s:selector_current_mode = ""
 let s:current_query = ""
 
 func clue#dash#init()
@@ -86,11 +88,12 @@ func clue#dash#sorted_docs()
 	return clue#dash#priority_docs(0)
 endfunc
 
-func clue#dash#open(query, mode)
+func clue#dash#open(query, mode, first)
 	let s:current_query = a:query
+	let res = []
 	for doc in clue#dash#sorted_docs()
-		let res = clue#dash#query(doc, a:query)
-		if len(res)
+		let res = res + map(clue#dash#query(doc, a:query), {_, v -> clue#dash#html_absolute_path(doc, v)})
+		if len(res) && a:first
 			break
 		endif
 	endfor
@@ -98,15 +101,27 @@ func clue#dash#open(query, mode)
 		return 0
 	endif
 
-	let path = clue#dash#html_absolute_path(doc, res[0])
-	if a:mode == 'term'
-		call clue#dash#open_internal(path)
-	elseif a:mode == 'popup'
-		call clue#dash#show_pandoc(path)
-	else
-		call clue#dash#open_external(path)
-	end
+	let s:selector_current_paths = res
+	let s:selector_current_mode = a:mode
+	call clue#util#choose(s:selector_current_paths, 'clue#dash#selector_callback')
 	return 1
+endfunc
+
+func clue#dash#selector_callback(w, i)
+	if a:i < 0
+		return
+	endif
+	call clue#dash#open_path(s:selector_current_paths[a:i - 1])
+endfunc
+
+func clue#dash#open_path(path)
+	if s:selector_current_mode == 'term'
+		call clue#dash#open_internal(a:path)
+	elseif s:selector_current_mode == 'popup'
+		call clue#dash#show_pandoc(a:path)
+	else
+		call clue#dash#open_external(a:path)
+	endif
 endfunc
 
 func clue#dash#open_internal(path)
@@ -118,7 +133,7 @@ func clue#dash#open_external(path)
 endfunc
 
 func clue#dash#lookup(query)
-	if !clue#dash#open(a:query, 'popup')
+	if !clue#dash#open(a:query, 'popup', 0)
 		call clue#dash#query_external(a:query)
 	endif
 endfunc

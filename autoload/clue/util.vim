@@ -38,3 +38,11 @@ func clue#util#popup(txt, filter)
 	endif
 	call setbufvar(winbufnr(s:last_popup), '&syntax', len(&syntax) ? &syntax : 'markdown')
 endfunc
+
+func clue#util#choose(arr, callback)
+	if len(a:arr) == 1 || has('nvim') " popup menu not yet implemented for neovim
+		call function(a:callback)(-1, 1)
+	else
+		call popup_menu(a:arr, #{callback: a:callback})
+	endif
+endfunc
