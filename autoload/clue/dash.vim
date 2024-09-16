@@ -88,6 +88,16 @@ func clue#dash#sorted_docs()
 	return clue#dash#priority_docs(0)
 endfunc
 
+func clue#dash#disambiguate_paths(p)
+	let s = a:p[0]
+	let i = len(a:p[0])
+	while !reduce(a:p, { a, v -> a && strcharpart(v, 0, i) ==# strcharpart(s, 0, i)}, 1)
+		let i -= 1
+	endwhile
+	" track back to the previous / and begin with the character right next to it
+	return mapnew(a:p, {_, v -> strcharpart(v, strridx(v, '/', i - 1) + 1)})
+endfunc
+
 func clue#dash#open(query, mode, first)
 	let s:current_query = a:query
 	let res = []
@@ -103,7 +113,7 @@ func clue#dash#open(query, mode, first)
 
 	let s:selector_current_paths = res
 	let s:selector_current_mode = a:mode
-	call clue#util#choose(s:selector_current_paths, 'clue#dash#selector_callback')
+	call clue#util#choose(clue#dash#disambiguate_paths(s:selector_current_paths), 'clue#dash#selector_callback')
 	return 1
 endfunc
 
