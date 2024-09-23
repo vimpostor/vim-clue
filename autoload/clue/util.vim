@@ -41,7 +41,9 @@ endfunc
 
 func clue#util#choose(arr, callback)
 	if len(a:arr) == 1
+		" no need to choose
 		call function(a:callback)(-1, 1)
+		return
 	endif
 
 	if has('nvim')
