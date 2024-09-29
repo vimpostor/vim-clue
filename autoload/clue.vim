@@ -11,6 +11,7 @@ endfunc
 func clue#default_options()
 	return #{
 		\ browser: "w3m",
+		\ default_handler: "popup",
 		\ default_mappings: 1,
 	\ }
 endfunc

@@ -121,16 +121,20 @@ func clue#dash#selector_callback(w, i)
 	if a:i < 0
 		return
 	endif
-	call clue#dash#open_path(s:selector_current_paths[a:i - 1])
+	call clue#dash#show(s:selector_current_paths[a:i - 1], s:current_query, s:selector_current_mode)
 endfunc
 
-func clue#dash#open_path(path)
-	if s:selector_current_mode == 'term'
+func clue#dash#show(path, query, mode)
+	if a:mode == 'term'
 		call clue#dash#open_internal(a:path)
-	elseif s:selector_current_mode == 'popup'
+	elseif a:mode == 'popup'
 		call clue#dash#show_pandoc(a:path)
-	else
+	elseif a:mode == 'dash'
+		call clue#dash#query_external(a:query)
+	elseif a:mode == 'browser'
 		call clue#dash#open_external(a:path)
+	else
+		echoe 'Unknown handler: ' . a:mode
 	endif
 endfunc
 
@@ -143,7 +147,7 @@ func clue#dash#open_external(path)
 endfunc
 
 func clue#dash#lookup(query)
-	if !clue#dash#open(a:query, 'popup', 0)
+	if !clue#dash#open(a:query, g:clue_options.default_handler, 0)
 		call clue#dash#query_external(a:query)
 	endif
 endfunc

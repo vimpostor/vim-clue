@@ -34,7 +34,9 @@ func clue#fzf#sink(l)
 		call clue#dash#open_external(p)
 	elseif k == "d" || k == "z"
 		call clue#dash#query_external(q)
-	else
+	elseif k == "p"
 		call clue#dash#show_pandoc(p)
+	else
+		call clue#dash#show(p, q, g:clue_options.default_handler)
 	endif
 endfunc

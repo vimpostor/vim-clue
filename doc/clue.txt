@@ -5,6 +5,7 @@ CONTENTS						*clue-contents*
 
 Introduction					|clue-introduction|
 Configuration					|clue-configure|
+Handlers					|clue-handlers|
 Api						|clue-api|
 Colors						|clue-colors|
 
@@ -16,7 +17,7 @@ Documentation directly at your fingertips.
 The following external dependencies are required to be installed:
 - zeal
 - sqlite
-= pandoc
+- pandoc
 
 ------------------------------------------------------------------------------
 CONFIGURATION						*clue-configure*
@@ -28,11 +29,41 @@ The default options can be retrieved with |clue#default_options()|.
 The following keys are available:
 
 	"browser"					*clue_options_browser*
-		The browser to use for rendering HTML in the terminal.
+		The browser to use for rendering HTML in the terminal. This is
+		used for |clue-handlers-term|.
+
+	"default_handler"				*clue_options_default_handler*
+		The default handler to show the documentation with. This is
+		the handler that will be used when a documentation entry is
+		selected without any extra keys. For a list of handlers see
+		|clue-handlers|.
 
 	"default_mappings"				*clue_options_default_mappings*
 		If truthy, use the default keybindings. When you disable this,
 		refer to |clue-api| for how to setup your own keybindings.
+
+------------------------------------------------------------------------------
+HANDLERS						*clue-handlers*
+
+Handlers define the way that the documentation is shown to the user.
+The following handlers exist:
+
+	"browser"					*clue-handlers-browser*
+		Open the documentation in an external web browser.
+		The default web browser is used for this.
+
+	"dash"						*clue-handlers-dash*
+		Open the documentation in an external dash-compatible
+		documentation browser.
+
+	"popup"						*clue-handlers-popup*
+		Show the documentation in a popup inside vim. The
+		documentation is rendered inline with `pandoc`.
+
+	"term"						*clue-handlers-term*
+		Show the documentation in a terminal buffer rendered through a
+		command line browser. The browser can be customized with
+		|clue_options_browser|.
 
 ------------------------------------------------------------------------------
 API							*clue-api*
