@@ -113,7 +113,7 @@ func clue#dash#open(query, mode, first)
 
 	let s:selector_current_paths = res
 	let s:selector_current_mode = a:mode
-	call clue#util#choose(clue#dash#disambiguate_paths(s:selector_current_paths), 'clue#dash#selector_callback')
+	call clue#util#choose("Documentation", clue#dash#disambiguate_paths(s:selector_current_paths), 'clue#dash#selector_callback')
 	return 1
 endfunc
 
