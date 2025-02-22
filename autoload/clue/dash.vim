@@ -143,7 +143,7 @@ func clue#dash#open_internal(path)
 endfunc
 
 func clue#dash#open_external(path)
-	call system("xdg-open " . a:path)
+	call system("xdg-open " . clue#util#strip_anchor(a:path))
 endfunc
 
 func clue#dash#lookup(query)
@@ -175,7 +175,7 @@ endfunc
 func clue#dash#popup_filter(w, k)
 	if a:k == 'b'
 		call popup_close(a:w)
-		call clue#dash#open_external(clue#util#strip_anchor(s:popup_current_path))
+		call clue#dash#open_external(s:popup_current_path)
 		return 1
 	elseif a:k == 'd' || a:k == 'z'
 		call popup_close(a:w)
