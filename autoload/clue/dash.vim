@@ -1,3 +1,4 @@
+let s:path = fnameescape(resolve(expand('<sfile>:p:h')) . '/elinks')
 let s:docs = {}
 let s:popup_current_path = ""
 let s:selector_current_paths = []
@@ -207,6 +208,29 @@ func clue#dash#show_pandoc(path)
 		endwhile
 	endif
 	let txt = systemlist("pandoc -w plain -r html -", html)
+	let s:popup_current_path = a:path
+	call clue#util#popup(txt, 'clue#dash#popup_filter')
+endfunc
+
+func clue#dash#show_elinks(path)
+	let a = clue#util#get_anchor(a:path)
+	let f = clue#util#strip_anchor(a:path)
+	let html = readfile(f)
+	if len(a)
+		let i = indexof(html, {_, v -> 1 + stridx(v, "</head>")})
+		if i + 1
+			let j = stridx(html[i], "</head>")
+			" insert our custom CSS hack to render only after the anchor
+			let html[i] = strcharpart(html[i], 0, j) . printf('<style>*{visibility:hidden;}#%1$s{visibility:visible;}#%1$s *{visibility:visible;}#%1$s ~ *{visibility:visible;}#%1$s ~ * *{visibility:visible;}}</style>', strpart(a, strridx(a, '/') + 1, )) . strcharpart(html[i], j)
+		endif
+	endif
+	call writefile(html, "/tmp/.clue.html")
+	let txt = systemlist(printf("elinks -config-dir '%s' -dump /tmp/.clue.html", s:path))
+	" trim empty lines, as visibility: hidden still occupies space
+	while len(txt) && empty(trim(txt[0]))
+		call remove(txt, 0)
+	endwhile
+
 	let s:popup_current_path = a:path
 	call clue#util#popup(txt, 'clue#dash#popup_filter')
 endfunc
