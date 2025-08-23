@@ -28,6 +28,10 @@ func clue#lookup(s)
 	if &filetype == "vim"
 		call clue#vimscript#lookup(a:s)
 		return
+	elseif &filetype == "c"
+		if clue#man#lookup(a:s)
+			return
+		endif
 	endif
 	call clue#dash#lookup(a:s)
 endfunc
