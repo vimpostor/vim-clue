@@ -153,16 +153,6 @@ func clue#dash#lookup(query)
 	endif
 endfunc
 
-func clue#dash#lookup_current()
-	call clue#dash#lookup(clue#util#current_symbol())
-endfunc
-
-func clue#dash#lookup_visual()
-	" first enter visual mode again, it got lost in the mapping and otherwise the cursor would be at the start of the selection instead of at the last location
-	exec "normal! gv"
-	call clue#dash#lookup(join(getregion(getpos('v'), getpos('.'), #{ type: mode() })))
-endfunc
-
 func clue#dash#lookup_opfunc(t)
 	let s = join(getregion(getpos("'["), getpos("']")))
 	call clue#dash#lookup(s)
