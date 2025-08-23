@@ -29,7 +29,11 @@ func clue#lookup(s)
 		call clue#vimscript#lookup(a:s)
 		return
 	elseif &filetype == "c"
-		if clue#man#lookup(a:s)
+		if clue#man#lookup(3, a:s)
+			return
+		endif
+	elseif &filetype == "sh"
+		if clue#man#lookup(1, a:s)
 			return
 		endif
 	endif

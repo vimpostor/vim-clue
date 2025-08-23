@@ -19,6 +19,10 @@ The following external dependencies are required to be installed:
 - sqlite
 - pandoc
 
+The main source of documentation being consulted are the installed Zeal
+docsets, but for some filetypes additional sources such as man pages will be
+searched.
+
 ------------------------------------------------------------------------------
 CONFIGURATION						*clue-configure*
 
