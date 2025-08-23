@@ -15,8 +15,8 @@ Additionally the following software dependencies are required to be installed:
 - [sqlite](https://www.sqlite.org/)
 - [pandoc](https://pandoc.org/)
 - [elinks](https://github.com/rkd77/elinks)
-
-![Screenshot](https://github.com/user-attachments/assets/28f03dbc-385d-4c17-a4ef-bb6b79561142)
+- 
+![Screenshot](https://github.com/user-attachments/assets/2594f14e-0f84-4657-a0cb-ef5de66e1a0b)
 
 # Usage
 
