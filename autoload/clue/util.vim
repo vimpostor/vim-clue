@@ -30,7 +30,7 @@ func clue#util#popup(txt, filter)
 		let s:last_popup = nvim_open_win(buf, 0, #{relative: 'cursor', bufpos: getpos('.')[1:2], width: tcols, height: 50, style: 'minimal'})
 		au CursorMoved * ++once call nvim_win_close(s:last_popup, 1)
 	else
-		let o = #{moved: "any", minwidth: tcols, border: [], padding: []}
+		let o = #{moved: "any", minwidth: tcols, border: [], padding: [0,0,0,0]}
 		if len(a:filter)
 			let o.filter = a:filter
 		endif
