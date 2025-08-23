@@ -17,9 +17,17 @@ func clue#default_options()
 endfunc
 
 func clue#lookup_current()
-	call clue#dash#lookup(clue#util#current_symbol())
+	call clue#lookup(clue#util#current_symbol())
 endfunc
 
 func clue#lookup_visual()
-	call clue#dash#lookup(join(getregion(getpos('v'), getpos('.'), #{ type: mode() })))
+	call clue#lookup(join(getregion(getpos('v'), getpos('.'), #{ type: mode() })))
+endfunc
+
+func clue#lookup(s)
+	if &filetype == "vim"
+		call clue#vimscript#lookup(a:s)
+		return
+	endif
+	call clue#dash#lookup(a:s)
 endfunc
